@@ -418,14 +418,13 @@ font-size:20px;
 
 	let dragging = false;
 
-	// Функция открытия сайта
-	function openSite() {
-	  intro.style.opacity = "0";
+	function openSite(){
+	  intro.style.display = "none";
 	  main.style.opacity = "1";
-	  setTimeout(()=>{ intro.style.display="none"; }, 600);
+	  handle.style.left = "0px"; // сброс позиции ползунка
 	}
 
-	// Телефон: drag
+	// Телефон
 	handle.addEventListener("touchstart", ()=>dragging=true);
 	window.addEventListener("touchend", ()=>dragging=false);
 	window.addEventListener("touchmove", (e)=>{
@@ -439,7 +438,7 @@ font-size:20px;
 	  if(x > rect.width - handle.offsetWidth*0.8) openSite();
 	});
 
-	// ПК: drag + click
+	// ПК
 	handle.addEventListener("mousedown", ()=>dragging=true);
 	window.addEventListener("mouseup", ()=>dragging=false);
 	window.addEventListener("mousemove",(e)=>{
