@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Юбилей</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Inter;
+scroll-behavior:smooth;
+}
+
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+position:relative;
+padding:40px 20px;
+}
+
+.bg{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+z-index:0;
+}
+
+.bg::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4); /* 0.6 — сила затемнения, можно 0.7 для темнее */
+  z-index:1;
+}
+
+
+.content{
+position:relative;
+z-index:2;
+max-width:700px;
+}
+
+/* календарь */
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:6px;
+margin-top:20px;
+font-size:14px;
+}
+
+.day{
+padding:8px;
+background:rgba(255,255,255,0.15);
+border-radius:8px;
+transition:.4s;
+}
+
+.day.event{
+background:white;
+color:black;
+}
+
+.day.circle{
+border-radius:50%;
+background:#fff;
+color:black;
+}
+
+/* программа */
+
+.timeline{
+margin-top:40px;
+display:flex;
+flex-direction:column;
+gap:40px;
+}
+
+.event{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.event img{
+width:60px;
+height:60px;
+border-radius:50%;
+object-fit:cover;
+}
+
+/* кнопка */
+
+.button{
+margin-top:25px;
+padding:12px 24px;
+border-radius:30px;
+background:white;
+color:black;
+text-decoration:none;
+font-size:14px;
+}
+
+/* форма */
+
+.form{
+display:flex;
+flex-direction:column;
+gap:15px;
+margin-top:20px;
+}
+
+select,button{
+padding:12px;
+border-radius:10px;
+border:none;
+}
+
+button{
+background:white;
+cursor:pointer;
+}
+
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:all 0.9s ease;
+}
+
+.reveal.show{
+opacity:1;
+transform:translateY(0);
+}
+
+body{
+margin:0;
+font-family:Inter;
+color:white;
+}
+
+/* первый экран */
+
+.hero{
+position:relative;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+overflow:hidden;
+}
+
+.hero-bg{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:url("birthday.jpg");
+background-size:cover;
+background-position:center;
+z-index:0;
+}
+
+.hero-bg::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4); /* 0.6 — сила затемнения, можно 0.7 для темнее */
+  z-index:1;
+}
+
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:600px;
+}
+
+/* общий фон */
+
+.global-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:url("background.jpg");
+background-size:cover;
+background-position:center;
+z-index:-1;
+}
+
+/* секции */
+
+.block{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:40px 20px;
+}
+
+.content{
+max-width:700px;
+}
+
+/* затемнение общего фона */
+
+.block::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+z-index:-1;
+}
+
+
+.timer{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:30px;
+flex-wrap:wrap;
+}
+
+.time-box{
+background:rgba(255,255,255,0.15);
+padding:15px 18px;
+border-radius:14px;
+min-width:70px;
+}
+
+.time-box span{
+font-size:26px;
+font-weight:600;
+display:block;
+}
+
+.time-box p{
+margin:0;
+font-size:12px;
+opacity:0.8;
+}
+
+.timeline{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:40px;
+margin-top:40px;
+}
+
+/* экран открытия */
+
+.intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+z-index:10;
+overflow:hidden;
+color:white;
+}
+
+.bg-image{
+position:absolute;
+width:100%;
+height:100%;
+background-image:url("background.jpg");
+background-size:cover;
+background-position:center;
+filter:blur(12px);
+transform:scale(1.1);
+}
+
+/* основной сайт */
+
+.main-site{
+opacity:0;
+transition:1s;
+}
+
+/* контент */
+
+.intro-content{
+position:relative;
+z-index:2;
+}
+
+/* слайдер */
+
+.slider{
+margin-top:30px;
+width:260px;
+height:50px;
+background:rgba(255,255,255,0.2);
+border-radius:30px;
+position:relative;
+overflow:hidden;
+}
+
+.slider-track{
+position:relative;
+height:100%;
+}
+
+.slider-handle{
+width:50px;
+height:50px;
+background:white;
+color:black;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+cursor:pointer;
+position:absolute;
+left:0;
+top:0;
+font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="intro" id="intro">
+
+	<div class="bg-image"></div>
+
+	<div class="intro-content">
+	<h1>Приглашение на юбилей</h1>
+	<p>Проведите, чтобы открыть</p>
+
+	<div class="slider">
+	<div class="slider-track">
+	<div class="slider-handle" id="handle">→</div>
+	</div>
+	</div>
+
+	</div>
+
+	</div>
+	<div class="main-site" id="mainSite">
+<!-- экран -->
+<section class="hero">
+
+<div class="hero-bg"></div>
+
+<div class="hero-content reveal">
+<h1>Юбилей</h1>
+<p>Дорогие друзья!</p>
+<p>
+Приглашаю вас разделить со мной этот особенный день —
+мой юбилей.
+Буду очень рад видеть вас на празднике.
+</p>
+
+</div>
+
+</section>
+<div class="global-bg"></div>
+<!-- дата -->
+<section id="dateSection">
+<div class="bg" style="background-image:url('date.avif')"></div>
+
+<div class="content">
+<h2>Дата праздника</h2>
+<h1>12 сентября 2026</h1>
+
+<div class="calendar" id="calendar"></div>
+
+</div>
+
+<div class="timer">
+
+<div class="time-box">
+<span id="days">0</span>
+<p>дней</p>
+</div>
+
+<div class="time-box">
+<span id="hours">0</span>
+<p>часов</p>
+</div>
+
+<div class="time-box">
+<span id="minutes">0</span>
+<p>минут</p>
+</div>
+
+<div class="time-box">
+<span id="seconds">0</span>
+<p>секунд</p>
+</div>
+
+</div>
+</section>
+
+<!-- программа -->
+<section>
+<div class="bg"></div>
+
+<div class="content">
+<h2 class="reveal">Программа вечера</h2>
+
+<div class="timeline">
+
+<div class="event">
+<img class="reveal" src="1.jpg">
+<div>
+<strong class="reveal">17:00</strong>
+<p class="reveal">Сбор гостей</p>
+</div>
+</div>
+
+<div class="event">
+<img class="reveal" src="2.jpg">
+<div>
+<strong class="reveal">18:00</strong>
+<p class="reveal">Начало банкета</p>
+</div>
+</div>
+
+<div class="event">
+<img class="reveal" src="3.jpg">
+<div>
+<strong class="reveal">20:00</strong>
+<p class="reveal">Развлекательная </p>
+<p class="reveal">программа</p>
+</div>
+</div>
+
+<div class="event">
+<img class="reveal" src="4.jpg">
+<div>
+<strong class="reveal">22:00</strong>
+<p class="reveal">Танцы</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- локация -->
+<section>
+<div class="bg"></div>
+
+<div class="content">
+<h2 class="reveal">Локация</h2>
+<p class="reveal">Ресторан Celebration Hall</p>
+
+<a class="button" href="https://maps.google.com" target="_blank">
+Открыть карту
+</a>
+
+</div>
+</section>
+
+<!-- подтверждение -->
+<section>
+<div class="bg"></div>
+
+<div class="content">
+<h2>Подтверждение присутствия</h2>
+
+<div class="form">
+
+<select>
+<option>Я приду</option>
+<option>Не смогу прийти</option>
+</select>
+
+<select>
+<option>Алкоголь</option>
+<option>Вино</option>
+<option>Шампанское</option>
+<option>Виски</option>
+<option>Без алкоголя</option>
+</select>
+
+<button>Отправить</button>
+
+</div>
+
+</div>
+</section>
+
+<script>
+
+/* календарь */
+
+const calendar = document.getElementById("calendar")
+const eventDay = 12
+
+for(let i=1;i<=30;i++){
+const d = document.createElement("div")
+d.className="day"
+d.innerText=i
+
+if(i===eventDay){
+d.classList.add("event")
+d.id="eventDay"
+}
+
+calendar.appendChild(d)
+}
+
+/* скролл эффект */
+
+const dateSection = document.getElementById("dateSection")
+
+window.addEventListener("scroll",()=>{
+const rect = dateSection.getBoundingClientRect()
+
+if(rect.top < window.innerHeight/2){
+document.getElementById("eventDay").classList.add("circle")
+}
+})
+
+</script>
+
+<script>
+
+const reveals = document.querySelectorAll(".reveal")
+
+function animateReveal(){
+
+reveals.forEach((el, index) => {
+
+const elementTop = el.getBoundingClientRect().top
+const windowHeight = window.innerHeight
+
+if(elementTop < windowHeight - 80){
+
+setTimeout(()=>{
+el.classList.add("show")
+}, index * 150)
+
+}
+
+})
+
+}
+
+window.addEventListener("scroll", animateReveal)
+window.addEventListener("load", animateReveal)
+
+</script>
+
+<script>
+
+const eventDate = new Date("September 12, 2026 18:00:00").getTime()
+
+setInterval(function(){
+
+const now = new Date().getTime()
+const diff = eventDate - now
+
+const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+document.getElementById("days").innerText = days
+document.getElementById("hours").innerText = hours
+document.getElementById("minutes").innerText = minutes
+document.getElementById("seconds").innerText = seconds
+
+},1000)
+
+</script>
+
+<script>
+
+const handle = document.getElementById("handle")
+const intro = document.getElementById("intro")
+const main = document.getElementById("mainSite")
+
+let isDragging = false
+
+handle.addEventListener("touchstart", () => {
+isDragging = true
+})
+
+window.addEventListener("touchend", () => {
+isDragging = false
+})
+
+window.addEventListener("touchmove", (e) => {
+
+if(!isDragging) return
+
+const slider = document.querySelector(".slider")
+const rect = slider.getBoundingClientRect()
+
+let x = e.touches[0].clientX - rect.left
+
+if(x < 0) x = 0
+if(x > rect.width - 50) x = rect.width - 50
+
+handle.style.left = x + "px"
+
+if(x > rect.width - 60){
+openSite()
+}
+
+})
+
+function openSite(){
+
+intro.style.opacity = "0"
+main.style.opacity = "1"
+
+setTimeout(()=>{
+intro.style.display="none"
+},600)
+
+}
+
+</script>
+
+</div></body>
+</html>
