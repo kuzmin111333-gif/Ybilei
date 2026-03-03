@@ -16,7 +16,7 @@ scroll-behavior:smooth;
 }
 
 section{
-min-height:100vh;
+min-height:auto;
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -52,7 +52,7 @@ z-index:0;
 
 .content{
 position:relative;
-z-index:2;
+z-index:5;
 max-width:700px;
 }
 
@@ -348,29 +348,118 @@ left:0;
 top:0;
 font-size:20px;
 }
+
+.slider{
+  margin:20px auto 0; /* центр по горизонтали */
+  width:260px;
+  height:50px;
+  background:rgba(255,255,255,0.2);
+  border-radius:30px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+}
+
+.slider-text{
+  position:absolute;
+  width:100%;
+  text-align:center;
+  font-size:14px;
+  opacity:0.8;
+  pointer-events:none;
+}
+
+.slider-handle{
+  width:50px;
+  height:50px;
+  background:white;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  cursor:pointer;
+  position:absolute;
+  left:0;
+  top:0;
+  font-size:20px;
+  transition:transform 0.2s;
+}
+
+.slider-handle:active{
+  transform:scale(0.95);
+}
 </style>
 </head>
 
 <body>
-
+<center>
 	<div class="intro" id="intro">
+	  <div class="bg-image"></div>
 
-	<div class="bg-image"></div>
+	  <div class="intro-content">
+	    <h1>Приглашение на юбилей</h1>
+	    <p>Проведите, чтобы открыть</p>
 
-	<div class="intro-content">
-	<h1>Приглашение на юбилей</h1>
-	<p>Проведите, чтобы открыть</p>
-
-	<div class="slider">
-	<div class="slider-track">
-	<div class="slider-handle" id="handle">→</div>
-	</div>
-	</div>
-
-	</div>
-
+	    <div class="slider" id="slider">
+	      <div class="slider-text" id="sliderText">Ну что, погнали?)</div>
+	      <div class="slider-handle" id="handle">→</div>
+	    </div>
+	  </div>
 	</div>
 	<div class="main-site" id="mainSite">
+	<script>
+	const intro = document.getElementById("intro");
+	const main = document.getElementById("mainSite");
+	const handle = document.getElementById("handle");
+	const slider = document.getElementById("slider");
+	const sliderText = document.getElementById("sliderText");
+
+	let dragging = false;
+
+	// Функция открытия сайта
+	function openSite() {
+	  intro.style.opacity = "0";
+	  main.style.opacity = "1";
+	  setTimeout(()=>{ intro.style.display="none"; }, 600);
+	}
+
+	// Телефон: drag
+	handle.addEventListener("touchstart", ()=>dragging=true);
+	window.addEventListener("touchend", ()=>dragging=false);
+	window.addEventListener("touchmove", (e)=>{
+	  if(!dragging) return;
+	  let rect = slider.getBoundingClientRect();
+	  let x = e.touches[0].clientX - rect.left - handle.offsetWidth/2;
+	  if(x < 0) x = 0;
+	  if(x > rect.width - handle.offsetWidth) x = rect.width - handle.offsetWidth;
+	  handle.style.left = x + "px";
+	  sliderText.style.opacity = 1 - x/(rect.width - handle.offsetWidth)*1.2;
+	  if(x > rect.width - handle.offsetWidth*0.8) openSite();
+	});
+
+	// ПК: drag + click
+	handle.addEventListener("mousedown", ()=>dragging=true);
+	window.addEventListener("mouseup", ()=>dragging=false);
+	window.addEventListener("mousemove",(e)=>{
+	  if(!dragging) return;
+	  let rect = slider.getBoundingClientRect();
+	  let x = e.clientX - rect.left - handle.offsetWidth/2;
+	  if(x < 0) x = 0;
+	  if(x > rect.width - handle.offsetWidth) x = rect.width - handle.offsetWidth;
+	  handle.style.left = x + "px";
+	  sliderText.style.opacity = 1 - x/(rect.width - handle.offsetWidth)*1.2;
+	  if(x > rect.width - handle.offsetWidth*0.8) openSite();
+	});
+
+	// ПК: клик по ползунку
+	if(window.innerWidth > 900){
+	  sliderText.innerText = "Нажмите, чтобы открыть";
+	  handle.onclick = openSite;
+	}
+	</script>
+	
 <!-- экран -->
 <section class="hero">
 
@@ -517,6 +606,7 @@ font-size:20px;
 </div>
 </section>
 
+
 <script>
 
 /* календарь */
@@ -603,7 +693,10 @@ document.getElementById("seconds").innerText = seconds
 </script>
 
 <script>
-
+	if(window.innerWidth > 900){
+	document.querySelector(".slider-text").innerText = "Нажмите, чтобы открыть"
+	document.querySelector(".handle").onclick = openSite
+	}
 const handle = document.getElementById("handle")
 const intro = document.getElementById("intro")
 const main = document.getElementById("mainSite")
