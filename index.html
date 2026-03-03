@@ -410,6 +410,7 @@ font-size:20px;
 	</div>
 	<div class="main-site" id="mainSite">
 	<script>
+
 	const intro = document.getElementById("intro");
 	const main = document.getElementById("mainSite");
 	const handle = document.getElementById("handle");
@@ -428,35 +429,23 @@ font-size:20px;
 	handle.addEventListener("touchstart", ()=>dragging=true);
 	window.addEventListener("touchend", ()=>dragging=false);
 	window.addEventListener("touchmove", (e)=>{
-	  if(!dragging) return;
-	  let rect = slider.getBoundingClientRect();
-	  let x = e.touches[0].clientX - rect.left - handle.offsetWidth/2;
-	  if(x < 0) x = 0;
-	  if(x > rect.width - handle.offsetWidth) x = rect.width - handle.offsetWidth;
-	  handle.style.left = x + "px";
-	  sliderText.style.opacity = 1 - x/(rect.width - handle.offsetWidth)*1.2;
-	  if(x > rect.width - handle.offsetWidth*0.8) openSite();
-	});
+	  if(!isDragging) return
 
-	// ПК
-	handle.addEventListener("mousedown", ()=>dragging=true);
-	window.addEventListener("mouseup", ()=>dragging=false);
-	window.addEventListener("mousemove",(e)=>{
-	  if(!dragging) return;
-	  let rect = slider.getBoundingClientRect();
-	  let x = e.clientX - rect.left - handle.offsetWidth/2;
-	  if(x < 0) x = 0;
-	  if(x > rect.width - handle.offsetWidth) x = rect.width - handle.offsetWidth;
-	  handle.style.left = x + "px";
-	  sliderText.style.opacity = 1 - x/(rect.width - handle.offsetWidth)*1.2;
-	  if(x > rect.width - handle.offsetWidth*0.8) openSite();
-	});
+	  const slider = document.querySelector(".slider")
+	  const rect = slider.getBoundingClientRect()
 
-	// ПК: клик по ползунку
-	if(window.innerWidth > 900){
-	  sliderText.innerText = "Нажмите, чтобы открыть";
-	  handle.onclick = openSite;
-	}
+	  let x = e.touches[0].clientX - rect.left
+
+	  if(x < 0) x = 0
+	  if(x > rect.width - 50) x = rect.width - 50
+
+	  handle.style.left = x + "px"
+
+	  if(x > rect.width - 60){
+	  openSite()
+	};
+
+
 	</script>
 	
 <!-- экран -->
